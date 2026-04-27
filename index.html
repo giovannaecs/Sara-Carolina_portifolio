@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sara Carolina — Engenharia Elétrica & Eletrotécnica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --rose-gold:   #B76E79;
+      --copper:      #B87333;
+      --dusty-rose:  #D4A5A5;
+      --graphite:    #36454F;
+      --off-white:   #F9F9F9;
+      --white:       #FFFFFF;
+      --light-bg:    #F4EEEC;
+
+      --grad-metal: linear-gradient(135deg, #B76E79 0%, #B87333 50%, #D4A5A5 100%);
+      --grad-soft:  linear-gradient(135deg, #F4EEEC 0%, #F9F9F9 100%);
+
+      --font-title: 'Raleway', sans-serif;
+      --font-body:  'Roboto', sans-serif;
+
+      --shadow-card: 0 8px 40px rgba(183,110,121,0.13);
+      --radius: 16px;
+    }
+
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--graphite);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--rose-gold); border-radius: 3px; }
+
+    /* ── UTILITIES ──────────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: var(--font-title);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: var(--font-title);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--graphite);
+      line-height: 1.15;
+    }
+    .metal-text {
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .divider {
+      width: 56px; height: 3px;
+      background: var(--grad-metal);
+      border-radius: 2px;
+      margin-top: 1.25rem;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(249,249,249,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(183,110,121,.12);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(183,110,121,.12); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-brand {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-title);
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      text-decoration: none;
+      position: relative;
+      transition: color .25s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad-metal);
+      border-radius: 1px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover { color: var(--rose-gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--off-white);
+      padding-top: 68px;
+    }
+    /* subtle circuit-trace background */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 80% 20%, rgba(184,115,51,.07) 0%, transparent 50%),
+        radial-gradient(circle at 10% 80%, rgba(183,110,121,.07) 0%, transparent 50%);
+    }
+    .circuit-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      overflow: hidden; opacity: .35;
+    }
+    .circuit-bg svg { width: 100%; height: 100%; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-title);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--grad-metal);
+    }
+    .hero-name {
+      font-family: var(--font-title);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: .95;
+      color: var(--graphite);
+      margin-bottom: .5rem;
+    }
+    .hero-name span {
+      display: block;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-family: var(--font-title);
+      font-size: clamp(.85rem, 1.5vw, 1rem);
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin: 1rem 0 2rem;
+    }
+    .hero-desc {
+      font-size: .95rem;
+      line-height: 1.8;
+      color: #5a6a74;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--font-title);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .9rem 2.2rem;
+      background: var(--grad-metal);
+      color: var(--white);
+      border: none; border-radius: 50px;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 8px 28px rgba(183,110,121,.35);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(183,110,121,.45);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--font-title);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .9rem 2.2rem;
+      background: transparent;
+      color: var(--rose-gold);
+      border: 1.5px solid var(--rose-gold);
+      border-radius: 50px;
+      cursor: pointer; text-decoration: none;
+      transition: all .25s;
+    }
+    .btn-ghost:hover { background: var(--rose-gold); color: var(--white); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* hero visual */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .monogram-ring {
+      width: min(360px, 90vw); height: min(360px, 90vw);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f4eeec, #ffffff);
+      box-shadow:
+        0 0 0 1px rgba(183,110,121,.15),
+        0 24px 80px rgba(183,110,121,.18),
+        inset 0 1px 1px rgba(255,255,255,.9);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%        { transform: translateY(-14px); }
+    }
+    .monogram-ring::before {
+      content: '';
+      position: absolute; inset: 16px;
+      border-radius: 50%;
+      border: 1px dashed rgba(183,110,121,.25);
+    }
+    .monogram-ring::after {
+      content: '';
+      position: absolute; inset: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,115,51,.12);
+    }
+    .monogram-sc {
+      font-family: var(--font-title);
+      font-size: 7rem;
+      font-weight: 800;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      letter-spacing: -.04em;
+      position: relative; z-index: 1;
+    }
+
+    /* hero stats */
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(183,110,121,.15);
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .75rem;
+      color: #8a9ba8;
+      margin-top: .2rem;
+      letter-spacing: .05em;
+    }
+
+    /* ── ABOUT ──────────────────────────────────────────────── */
+    #about {
+      padding: 100px 0;
+      background: var(--white);
+      position: relative; overflow: hidden;
+    }
+    #about::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,165,165,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-card {
+      background: var(--light-bg);
+      border-radius: var(--radius);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--grad-metal);
+    }
+    .about-photo-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(145deg, #ede3e0, #f9f3f1);
+      border-radius: 12px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .75rem;
+      color: var(--dusty-rose);
+      font-family: var(--font-title);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      border: 2px dashed rgba(183,110,121,.25);
+    }
+    .about-photo-placeholder svg { opacity: .5; }
+    .about-body { padding: 1rem 0; }
+    .about-body p {
+      font-size: .95rem;
+      line-height: 1.85;
+      color: #5a6a74;
+      margin-bottom: 1.2rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+    .highlight-chip {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(183,110,121,.08);
+      border: 1px solid rgba(183,110,121,.2);
+      color: var(--rose-gold);
+      font-family: var(--font-title);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .35rem .85rem;
+      border-radius: 50px;
+      margin: .25rem;
+    }
+    .chips-row { margin: 1.5rem 0; flex-wrap: wrap; display: flex; }
+
+    /* ── SERVICES ───────────────────────────────────────────── */
+    #services {
+      padding: 100px 0;
+      background: var(--off-white);
+    }
+    .services-header { text-align: center; margin-bottom: 4rem; }
+    .services-header .divider { margin: 1.25rem auto 0; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(183,110,121,.1);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--grad-metal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(183,110,121,.22);
+    }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(183,110,121,.1), rgba(184,115,51,.1));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .service-icon svg { width: 26px; height: 26px; }
+    .service-card h3 {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--graphite);
+      margin-bottom: .75rem;
+    }
+    .service-card p {
+      font-size: .88rem;
+      line-height: 1.75;
+      color: #7a8d98;
+    }
+
+    /* ── PROJECTS ───────────────────────────────────────────── */
+    #projects {
+      padding: 100px 0;
+      background: var(--white);
+    }
+    .projects-header { margin-bottom: 3.5rem; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(183,110,121,.1);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-card);
+    }
+    .project-thumb {
+      height: 200px;
+      background: linear-gradient(135deg, #ede3e0 0%, #f9f3f1 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .project-thumb-pattern {
+      position: absolute; inset: 0;
+      opacity: .18;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(183,110,121,.4) 20px, rgba(183,110,121,.4) 21px),
+        repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(183,110,121,.4) 20px, rgba(183,110,121,.4) 21px);
+    }
+    .project-tag {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--grad-metal);
+      color: var(--white);
+      font-family: var(--font-title);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .3rem .8rem;
+      border-radius: 50px;
+    }
+    .project-thumb-icon { position: relative; z-index: 1; }
+    .project-body { padding: 1.75rem; }
+    .project-body h3 {
+      font-family: var(--font-title);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--graphite);
+      margin-bottom: .5rem;
+    }
+    .project-body p {
+      font-size: .85rem;
+      line-height: 1.7;
+      color: #7a8d98;
+    }
+
+    /* ── SKILLS BAR ─────────────────────────────────────────── */
+    #skills {
+      padding: 80px 0;
+      background: var(--graphite);
+      position: relative; overflow: hidden;
+    }
+    #skills::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(184,115,51,.12) 0%, transparent 60%);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+      position: relative; z-index: 1;
+    }
+    .skill-item { }
+    .skill-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: .65rem;
+    }
+    .skill-name {
+      font-family: var(--font-title);
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: rgba(249,249,249,.85);
+    }
+    .skill-pct {
+      font-family: var(--font-title);
+      font-size: .78rem;
+      font-weight: 600;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .skill-bar {
+      height: 5px;
+      background: rgba(255,255,255,.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: var(--grad-metal);
+      border-radius: 3px;
+      transform-origin: left;
+      animation: fillBar 1.4s ease forwards;
+      transform: scaleX(0);
+    }
+    @keyframes fillBar { to { transform: scaleX(1); } }
+    .skills-section-label {
+      font-family: var(--font-title);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: .75rem;
+    }
+    .skills-title {
+      font-family: var(--font-title);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--off-white);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── CONTACT ────────────────────────────────────────────── */
+    #contact {
+      padding: 100px 0;
+      background: var(--off-white);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info {}
+    .contact-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      margin-top: 2rem;
+    }
+    .contact-icon-wrap {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(183,110,121,.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon-wrap svg { width: 20px; height: 20px; }
+    .contact-item-label {
+      font-family: var(--font-title);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: .2rem;
+    }
+    .contact-item-value {
+      font-size: .9rem;
+      color: var(--graphite);
+    }
+    .contact-form-wrap {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.75rem;
+      box-shadow: var(--shadow-card);
+    }
+    .form-group { margin-bottom: 1.4rem; }
+    .form-group label {
+      display: block;
+      font-family: var(--font-title);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      margin-bottom: .5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: .85rem 1.1rem;
+      background: var(--off-white);
+      border: 1.5px solid rgba(183,110,121,.18);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: .9rem;
+      color: var(--graphite);
+      outline: none;
+      transition: border-color .25s, box-shadow .25s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--rose-gold);
+      box-shadow: 0 0 0 3px rgba(183,110,121,.12);
+    }
+    .form-group textarea { height: 120px; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--graphite);
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: var(--font-title);
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--grad-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .footer-tagline {
+      font-size: .8rem;
+      color: rgba(249,249,249,.45);
+      letter-spacing: .05em;
+    }
+
+    /* ── FADE-IN ANIMATION ──────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-visual { order: -1; }
+      .monogram-ring { width: 220px; height: 220px; }
+      .monogram-sc { font-size: 5rem; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-brand">Sara Carolina</a>
+      <ul class="nav-links">
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#services">Serviços</a></li>
+        <li><a href="#projects">Projetos</a></li>
+        <li><a href="#skills">Competências</a></li>
+        <li><a href="#contact">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+
+  <section id="hero">
+    <!-- Circuit trace decorations -->
+    <div class="circuit-bg">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="120" cy="200" r="4" fill="#B76E79"/>
+        <path d="M120 200 H300 V380 H480" stroke="#B76E79" stroke-width="1" stroke-dasharray="6 4"/>
+        <circle cx="480" cy="380" r="4" fill="#B87333"/>
+        <path d="M480 380 H660 V160" stroke="#B87333" stroke-width="1" stroke-dasharray="6 4"/>
+        <circle cx="660" cy="160" r="4" fill="#D4A5A5"/>
+        <path d="M1320 700 H1140 V520 H960" stroke="#B76E79" stroke-width="1" stroke-dasharray="6 4"/>
+        <circle cx="960" cy="520" r="4" fill="#B76E79"/>
+        <path d="M960 520 H780 V740" stroke="#D4A5A5" stroke-width="1" stroke-dasharray="6 4"/>
+        <circle cx="780" cy="740" r="4" fill="#B87333"/>
+        <circle cx="1320" cy="700" r="6" fill="none" stroke="#B76E79" stroke-width="1.5"/>
+        <circle cx="200" cy="750" r="30" fill="none" stroke="#D4A5A5" stroke-width="1"/>
+        <circle cx="200" cy="750" r="18" fill="none" stroke="#D4A5A5" stroke-width=".5"/>
+      </svg>
+    </div>
+
+```
+<div class="container">
+  <div class="hero-grid">
+    <div class="hero-content fade-up">
+      <p class="hero-eyebrow">Engenharia Elétrica & Eletrotécnica · Belo Horizonte – MG</p>
+      <h1 class="hero-name">
+        Sara<br/>
+        <span>Carolina</span>
+      </h1>
+      <p class="hero-sub">Sistemas Off-Grid · SPDA · Energia Solar · Mineração</p>
+      <p class="hero-desc">
+        Graduanda em Engenharia Elétrica pelo CEFET-MG e Técnica em Eletrotécnica, com sólida experiência em projetos off-grid e híbridos para mineração e agronegócio. Premiada pela Vale no programa Kaizen por inovação em equipamentos off-grid.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Ver Projetos
+        </a>
+        <a href="#contact" class="btn-ghost">Contato</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Anos de experiência</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Empresas de atuação</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">🏆</div>
+          <div class="stat-label">Premiação Vale Kaizen</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-up" style="animation-delay:.2s">
+      <div class="monogram-ring">
+        <span class="monogram-sc">SC</span>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── ABOUT ── -->
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-card fade-up">
+          <div class="about-photo-placeholder">
+            <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Sua foto aqui</span>
+          </div>
+        </div>
+
+```
+    <div class="about-body fade-up" style="transition-delay:.15s">
+      <p class="section-label">Sobre mim</p>
+      <h2 class="section-title">
+        Engenharia com <span class="metal-text">propósito</span>
+      </h2>
+      <div class="divider"></div>
+
+      <div class="chips-row">
+        <span class="highlight-chip">⚡ Off-Grid & Híbrido</span>
+        <span class="highlight-chip">☀️ Energia Solar</span>
+        <span class="highlight-chip">🛡️ SPDA (NBR 5419)</span>
+        <span class="highlight-chip">⛏️ Mineração</span>
+        <span class="highlight-chip">🔌 NBR 5410 & 14039</span>
+        <span class="highlight-chip">🤖 Hardware Embarcado</span>
+      </div>
+
+      <p>Formada como Técnica em Eletrotécnica pelo CEFET-MG (2017) e graduanda em Engenharia Elétrica pela mesma instituição, com previsão de conclusão em dezembro de 2027.</p>
+      <p>Possuo sólida experiência no dimensionamento de sistemas off-grid, híbridos e fotovoltaicos para mineração e agronegócio, além de domínio em SPDA (NBR 5419 atualizada) e projetos elétricos industriais e residenciais.</p>
+      <p>Complemento minha atuação com habilidades em modelagem digital (SolidWorks Electrical, AutoCAD, Revit) e desenvolvimento de hardware embarcado, unindo rigor normativo e inovação tecnológica.</p>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── SERVICES ── -->
+
+  <section id="services">
+    <div class="container">
+      <div class="services-header fade-up">
+        <p class="section-label">O que ofereço</p>
+        <h2 class="section-title">Serviços <span class="metal-text">Especializados</span></h2>
+        <div class="divider"></div>
+      </div>
+
+```
+  <div class="services-grid">
+
+    <div class="service-card fade-up">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3>Sistemas Off-Grid & Híbridos</h3>
+      <p>Projeto e dimensionamento de sistemas elétricos off-grid e híbridos para setores industriais, mineração e agronegócio, otimizando eficiência e continuidade operacional em ambientes de difícil acesso.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.1s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+      </div>
+      <h3>Energia Solar Fotovoltaica</h3>
+      <p>Dimensionamento de usinas fotovoltaicas e sistemas de geração solar para residências, comércio e indústria, com foco em eficiência energética e retorno de investimento.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.2s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>SPDA — Para-Raios (NBR 5419)</h3>
+      <p>Projeto de Sistemas de Proteção contra Descargas Atmosféricas conforme NBR 5419 atualizada, para instalações residenciais, comerciais e industriais.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.3s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>Projetos Elétricos (NBR 5410)</h3>
+      <p>Elaboração de projetos de instalações elétricas de baixa tensão com conformidade à NBR 5410, incluindo diagramas unifilares, memorial descritivo e lista de materiais.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.4s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Medição & Conformidade (SMARTEM)</h3>
+      <p>Avaliação de normas in loco com equipamentos de medição residencial, garantindo conformidade técnica e precisão na coleta de dados de consumo energético.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.5s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <h3>COW & Telecomunicações (LTE)</h3>
+      <p>Desenvolvimento de Cell on Wheels (COW) para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── PROJECTS ── -->
+
+  <section id="projects">
+    <div class="container">
+      <div class="projects-header fade-up">
+        <p class="section-label">Portfólio</p>
+        <h2 class="section-title">Projetos <span class="metal-text">em Destaque</span></h2>
+        <div class="divider"></div>
+      </div>
+
+```
+  <div class="projects-grid">
+
+    <div class="project-card fade-up">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">Mineração · Vale</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.2" opacity=".6"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Cabine Segura Híbrida — Perfuratrizes</h3>
+        <p>Desenvolvimento de cabine segura híbrida para perfuratrizes e geradores off-grid móveis para cancelas em áreas de mineração. Projeto premiado pela Vale no programa Kaizen pela inovação.</p>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:.1s">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">Telecom · LTE</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.2" opacity=".6"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>COW (Cell on Wheels) para LTE</h3>
+        <p>Liderança no desenvolvimento de Cell on Wheels para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:.2s">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">IoT · Medição</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#D4A5A5" stroke-width="1.2" opacity=".8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>SMARTEM — Medição Residencial</h3>
+        <p>Implementação do equipamento SMARTEM para medição residencial e avaliação de normas in loco, assegurando conformidade técnica e precisão na coleta de dados de consumo.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── SKILLS ── -->
+
+  <section id="skills">
+    <div class="container">
+      <p class="skills-section-label fade-up">Competências Técnicas</p>
+      <h2 class="skills-title fade-up">Domínio <span class="metal-text">técnico</span> em cada detalhe</h2>
+
+```
+  <div class="skills-grid">
+    <div class="skill-item fade-up">
+      <div class="skill-header">
+        <span class="skill-name">SolidWorks Electrical (Roteamento 3D)</span>
+        <span class="skill-pct">90%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.1s">
+      <div class="skill-header">
+        <span class="skill-name">AutoCAD & Revit — Projetos Elétricos</span>
+        <span class="skill-pct">92%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.2s">
+      <div class="skill-header">
+        <span class="skill-name">Sistemas Off-Grid & Híbridos</span>
+        <span class="skill-pct">95%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.3s">
+      <div class="skill-header">
+        <span class="skill-name">NBR 5410, 14039 & 5419 (SPDA)</span>
+        <span class="skill-pct">93%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:93%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.4s">
+      <div class="skill-header">
+        <span class="skill-name">Hardware Embarcado & Arduino</span>
+        <span class="skill-pct">80%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.5s">
+      <div class="skill-header">
+        <span class="skill-name">Gestão de Projetos (PMBok)</span>
+        <span class="skill-pct">82%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── CONTACT ── -->
+
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="fade-up">
+          <p class="section-label">Vamos conversar</p>
+          <h2 class="section-title">Entre em <span class="metal-text">contato</span></h2>
+          <div class="divider"></div>
+          <p style="margin-top:1.5rem;font-size:.9rem;line-height:1.8;color:#7a8d98">
+            Tem um projeto de engenharia elétrica, sistema off-grid ou SPDA? Vamos conversar — estou em Belo Horizonte – MG e atendo projetos em todo o Brasil.
+          </p>
+
+```
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.88 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.81 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">Telefone / WhatsApp</p>
+          <p class="contact-item-value">(31) 99430-9333</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value">eng.saracarolina@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">LinkedIn</p>
+          <p class="contact-item-value">linkedin.com/in/sara-carolina</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">Localização</p>
+          <p class="contact-item-value">Belo Horizonte – MG</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap fade-up" style="transition-delay:.15s">
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome" />
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" placeholder="seu@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Assunto</label>
+        <input type="text" placeholder="Ex: Projeto elétrico residencial" />
+      </div>
+      <div class="form-group">
+        <label>Mensagem</label>
+        <textarea placeholder="Descreva seu projeto ou necessidade..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Enviar Mensagem
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- ── FOOTER ── -->
+
+  <footer>
+    <div class="container">
+      <p class="footer-brand">Sara Carolina Alves de Paula</p>
+      <p class="footer-tagline">Engenharia Elétrica & Eletrotécnica · CEFET-MG · Belo Horizonte – MG</p>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ── -->
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Fade-up on scroll (IntersectionObserver)
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Skill bars: trigger fill on view
+    const skillFills = document.querySelectorAll('.skill-fill');
+    const skillObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animation = 'fillBar 1.4s ease forwards';
+          skillObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    skillFills.forEach(el => { el.style.transform = 'scaleX(0)'; skillObs.observe(el); });
+  </script>
+
+</body>
+</html>
