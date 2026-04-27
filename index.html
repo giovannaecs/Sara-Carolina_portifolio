@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -134,6 +135,7 @@
       background: var(--off-white);
       padding-top: 68px;
     }
+    /* subtle circuit-trace background */
     #hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -238,7 +240,7 @@
     .btn-ghost:hover { background: var(--rose-gold); color: var(--white); }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-    /* ── HERO VISUAL & LOGO ─────────────────────────────────── */
+    /* hero visual */
     .hero-visual {
       display: flex; justify-content: center; align-items: center;
     }
@@ -256,40 +258,35 @@
     }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-14px); }
+      50%        { transform: translateY(-14px); }
     }
     .monogram-ring::before {
       content: '';
       position: absolute; inset: 16px;
       border-radius: 50%;
       border: 1px dashed rgba(183,110,121,.25);
-      pointer-events: none;
     }
     .monogram-ring::after {
       content: '';
       position: absolute; inset: 28px;
       border-radius: 50%;
       border: 1px solid rgba(184,115,51,.12);
-      pointer-events: none;
     }
-    /* Logo image — centralised and contained inside the ring */
-    .hero-logo {
-      width: 70%;
-      height: 70%;
+    .monogram-sc {
+      width: 72%;
+      height: 72%;
       object-fit: contain;
-      object-position: center;
-      display: block;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 4px 18px rgba(183,110,121,.18));
+      position: relative; z-index: 1;
+      filter: drop-shadow(0 4px 16px rgba(183,110,121,.18));
     }
 
-    /* ── HERO STATS ─────────────────────────────────────────── */
+    /* hero stats */
     .hero-stats {
       display: flex; gap: 2.5rem; margin-top: 2.5rem;
       padding-top: 2rem;
       border-top: 1px solid rgba(183,110,121,.15);
     }
+    .stat-item {}
     .stat-num {
       font-family: var(--font-title);
       font-size: 2rem;
@@ -339,20 +336,26 @@
       position: absolute; top: 0; left: 0; right: 0; height: 4px;
       background: var(--grad-metal);
     }
-    .about-photo-placeholder {
-      width: 100%; aspect-ratio: 3/4;
-      background: linear-gradient(145deg, #ede3e0, #f9f3f1);
+    .about-photo-wrap {
+      width: 100%;
       border-radius: 12px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .75rem;
-      color: var(--dusty-rose);
-      font-family: var(--font-title);
-      font-size: .8rem;
-      letter-spacing: .1em;
-      border: 2px dashed rgba(183,110,121,.25);
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(183,110,121,.15);
+      position: relative;
     }
-    .about-photo-placeholder svg { opacity: .5; }
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--grad-metal);
+      z-index: 1;
+    }
+    .about-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
     .about-body { padding: 1rem 0; }
     .about-body p {
       font-size: .95rem;
@@ -493,7 +496,7 @@
       color: #7a8d98;
     }
 
-    /* ── SKILLS ─────────────────────────────────────────────── */
+    /* ── SKILLS BAR ─────────────────────────────────────────── */
     #skills {
       padding: 80px 0;
       background: var(--graphite);
@@ -510,6 +513,7 @@
       gap: 2.5rem;
       position: relative; z-index: 1;
     }
+    .skill-item { }
     .skill-header {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: .65rem;
@@ -541,6 +545,7 @@
       background: var(--grad-metal);
       border-radius: 3px;
       transform-origin: left;
+      animation: fillBar 1.4s ease forwards;
       transform: scaleX(0);
     }
     @keyframes fillBar { to { transform: scaleX(1); } }
@@ -572,6 +577,7 @@
       gap: 5rem;
       align-items: start;
     }
+    .contact-info {}
     .contact-item {
       display: flex; gap: 1rem; align-items: flex-start;
       margin-top: 2rem;
@@ -674,15 +680,17 @@
       .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
       .hero-visual { order: -1; }
       .monogram-ring { width: 220px; height: 220px; }
-      .hero-logo { width: 68%; height: 68%; }
+      .monogram-sc { font-size: 5rem; }
       .nav-links { display: none; }
       .hero-stats { gap: 1.5rem; }
     }
   </style>
+
 </head>
 <body>
 
   <!-- ── NAV ── -->
+
   <nav id="main-nav">
     <div class="container nav-inner">
       <a href="#hero" class="nav-brand">Sara Carolina</a>
@@ -697,7 +705,9 @@
   </nav>
 
   <!-- ── HERO ── -->
+
   <section id="hero">
+    <!-- Circuit trace decorations -->
     <div class="circuit-bg">
       <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="120" cy="200" r="4" fill="#B76E79"/>
@@ -715,94 +725,93 @@
       </svg>
     </div>
 
-    <div class="container">
-      <div class="hero-grid">
-
-        <div class="hero-content fade-up">
-          <p class="hero-eyebrow">Engenharia Elétrica · Belo Horizonte – MG</p>
-          <h1 class="hero-name">
-            Sara<br/>
-            <span>Carolina</span>
-          </h1>
-          <p class="hero-sub">Sistemas Off-Grid · SPDA · Energia Solar · Mineração</p>
-          <p class="hero-desc">
-            Graduanda em Engenharia Elétrica pelo CEFET-MG e Técnica em Eletrotécnica, com sólida experiência em projetos off-grid e híbridos para mineração e agronegócio. Premiada pela Vale no programa Kaizen por inovação em equipamentos off-grid.
-          </p>
-          <div class="hero-ctas">
-            <a href="#projects" class="btn-primary">
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              Ver Projetos
-            </a>
-            <a href="#contact" class="btn-ghost">Contato</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-num">6+</div>
-              <div class="stat-label">Anos de experiência</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">Diversas</div>
-              <div class="stat-label">Áreas de atuação</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">🏆</div>
-              <div class="stat-label">Premiação Vale Kaizen</div>
-            </div>
-          </div>
+```
+<div class="container">
+  <div class="hero-grid">
+    <div class="hero-content fade-up">
+      <p class="hero-eyebrow">Engenharia Elétrica & Eletrotécnica · Belo Horizonte – MG</p>
+      <h1 class="hero-name">
+        Sara<br/>
+        <span>Carolina</span>
+      </h1>
+      <p class="hero-sub">Sistemas Off-Grid · SPDA · Energia Solar · Mineração</p>
+      <p class="hero-desc">
+        Graduanda em Engenharia Elétrica pelo CEFET-MG e Técnica em Eletrotécnica, com sólida experiência em projetos off-grid e híbridos para mineração e agronegócio. Premiada pela Vale no programa Kaizen por inovação em equipamentos off-grid.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Ver Projetos
+        </a>
+        <a href="#contact" class="btn-ghost">Contato</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Anos de experiência</div>
         </div>
-
-        <div class="hero-visual fade-up" style="animation-delay:.2s">
-          <div class="monogram-ring">
-            <img
-              src="img/LogoSara.png"
-              alt="Logotipo Sara Carolina"
-              class="hero-logo"
-            />
-          </div>
+        <div class="stat-item">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Empresas de atuação</div>
         </div>
-
+        <div class="stat-item">
+          <div class="stat-num">🏆</div>
+          <div class="stat-label">Premiação Vale Kaizen</div>
+        </div>
       </div>
     </div>
+
+    <div class="hero-visual fade-up" style="animation-delay:.2s">
+      <div class="monogram-ring">
+        <img class="monogram-sc" src="img/LogoSara.png" alt="Logo Sara Carolina" />
+      </div>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── ABOUT ── -->
+
   <section id="about">
     <div class="container">
       <div class="about-grid">
-
         <div class="about-card fade-up">
-          <div class="about-photo-placeholder">
-            <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span>Sua foto aqui</span>
+          <div class="about-photo-wrap">
+            <img src="img/FotoSara.png" alt="Foto Sara Carolina" />
           </div>
         </div>
 
-        <div class="about-body fade-up" style="transition-delay:.15s">
-          <p class="section-label">Sobre mim</p>
-          <h2 class="section-title">
-            Engenharia com <span class="metal-text">propósito</span>
-          </h2>
-          <div class="divider"></div>
+```
+    <div class="about-body fade-up" style="transition-delay:.15s">
+      <p class="section-label">Sobre mim</p>
+      <h2 class="section-title">
+        Engenharia com <span class="metal-text">propósito</span>
+      </h2>
+      <div class="divider"></div>
 
-          <div class="chips-row">
-            <span class="highlight-chip">Off-Grid & Híbrido</span>
-            <span class="highlight-chip">Energia Solar</span>
-            <span class="highlight-chip">SPDA (NBR 5419)</span>
-            <span class="highlight-chip">Eletrônica</span>
-            <span class="highlight-chip">NBR 5410 & 14039</span>
-            <span class="highlight-chip">Hardware Embarcado</span>
-          </div>
-
-          <p>Formada como Técnica em Eletrotécnica pelo CEFET-MG (2017) e graduanda em Engenharia Elétrica pela mesma instituição, com previsão de conclusão em dezembro de 2027.</p>
-          <p>Possuo sólida experiência no dimensionamento de sistemas off-grid, híbridos e fotovoltaicos para mineração e agronegócio, além de domínio em SPDA (NBR 5419 atualizada) e projetos elétricos industriais e residenciais.</p>
-          <p>Complemento minha atuação com habilidades em modelagem digital (SolidWorks Electrical, AutoCAD, Revit) e desenvolvimento de hardware embarcado, unindo rigor normativo e inovação tecnológica.</p>
-        </div>
-
+      <div class="chips-row">
+        <span class="highlight-chip">⚡ Off-Grid & Híbrido</span>
+        <span class="highlight-chip">☀️ Energia Solar</span>
+        <span class="highlight-chip">🛡️ SPDA (NBR 5419)</span>
+        <span class="highlight-chip">⛏️ Mineração</span>
+        <span class="highlight-chip">🔌 NBR 5410 & 14039</span>
+        <span class="highlight-chip">🤖 Hardware Embarcado</span>
       </div>
+
+      <p>Formada como Técnica em Eletrotécnica pelo CEFET-MG (2017) e graduanda em Engenharia Elétrica pela mesma instituição, com previsão de conclusão em dezembro de 2027.</p>
+      <p>Possuo sólida experiência no dimensionamento de sistemas off-grid, híbridos e fotovoltaicos para mineração e agronegócio, além de domínio em SPDA (NBR 5419 atualizada) e projetos elétricos industriais e residenciais.</p>
+      <p>Complemento minha atuação com habilidades em modelagem digital (SolidWorks Electrical, AutoCAD, Revit) e desenvolvimento de hardware embarcado, unindo rigor normativo e inovação tecnológica.</p>
     </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── SERVICES ── -->
+
   <section id="services">
     <div class="container">
       <div class="services-header fade-up">
@@ -811,61 +820,65 @@
         <div class="divider"></div>
       </div>
 
-      <div class="services-grid">
+```
+  <div class="services-grid">
 
-        <div class="service-card fade-up">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <h3>Sistemas Off-Grid & Híbridos</h3>
-          <p>Projeto e dimensionamento de sistemas elétricos off-grid e híbridos para setores industriais, mineração e agronegócio, otimizando eficiência e continuidade operacional em ambientes de difícil acesso.</p>
-        </div>
-
-        <div class="service-card fade-up" style="transition-delay:.1s">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
-          </div>
-          <h3>Energia Solar Fotovoltaica</h3>
-          <p>Dimensionamento de usinas fotovoltaicas e sistemas de geração solar para residências, comércio e indústria, com foco em eficiência energética e retorno de investimento.</p>
-        </div>
-
-        <div class="service-card fade-up" style="transition-delay:.2s">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3>SPDA — Para-Raios (NBR 5419)</h3>
-          <p>Projeto de Sistemas de Proteção contra Descargas Atmosféricas conforme NBR 5419 atualizada, para instalações residenciais, comerciais e industriais.</p>
-        </div>
-
-        <div class="service-card fade-up" style="transition-delay:.3s">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <h3>Projetos Elétricos (NBR 5410)</h3>
-          <p>Elaboração de projetos de instalações elétricas de baixa tensão com conformidade à NBR 5410, incluindo diagramas unifilares, memorial descritivo e lista de materiais.</p>
-        </div>
-
-        <div class="service-card fade-up" style="transition-delay:.4s">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3>Medição & Conformidade (SMARTEM)</h3>
-          <p>Avaliação de normas in loco com equipamentos de medição residencial, garantindo conformidade técnica e precisão na coleta de dados de consumo energético.</p>
-        </div>
-
-        <div class="service-card fade-up" style="transition-delay:.5s">
-          <div class="service-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          </div>
-          <h3>COW & Telecomunicações (LTE)</h3>
-          <p>Desenvolvimento de Cell on Wheels (COW) para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
-        </div>
-
+    <div class="service-card fade-up">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       </div>
+      <h3>Sistemas Off-Grid & Híbridos</h3>
+      <p>Projeto e dimensionamento de sistemas elétricos off-grid e híbridos para setores industriais, mineração e agronegócio, otimizando eficiência e continuidade operacional em ambientes de difícil acesso.</p>
     </div>
+
+    <div class="service-card fade-up" style="transition-delay:.1s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+      </div>
+      <h3>Energia Solar Fotovoltaica</h3>
+      <p>Dimensionamento de usinas fotovoltaicas e sistemas de geração solar para residências, comércio e indústria, com foco em eficiência energética e retorno de investimento.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.2s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>SPDA — Para-Raios (NBR 5419)</h3>
+      <p>Projeto de Sistemas de Proteção contra Descargas Atmosféricas conforme NBR 5419 atualizada, para instalações residenciais, comerciais e industriais.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.3s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>Projetos Elétricos (NBR 5410)</h3>
+      <p>Elaboração de projetos de instalações elétricas de baixa tensão com conformidade à NBR 5410, incluindo diagramas unifilares, memorial descritivo e lista de materiais.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.4s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Medição & Conformidade (SMARTEM)</h3>
+      <p>Avaliação de normas in loco com equipamentos de medição residencial, garantindo conformidade técnica e precisão na coleta de dados de consumo energético.</p>
+    </div>
+
+    <div class="service-card fade-up" style="transition-delay:.5s">
+      <div class="service-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <h3>COW & Telecomunicações (LTE)</h3>
+      <p>Desenvolvimento de Cell on Wheels (COW) para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
+    </div>
+
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── PROJECTS ── -->
+
   <section id="projects">
     <div class="container">
       <div class="projects-header fade-up">
@@ -874,196 +887,199 @@
         <div class="divider"></div>
       </div>
 
-      <div class="projects-grid">
+```
+  <div class="projects-grid">
 
-        <div class="project-card fade-up">
-          <div class="project-thumb">
-            <div class="project-thumb-pattern"></div>
-            <span class="project-tag">Mineração · Vale</span>
-            <div class="project-thumb-icon">
-              <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.2" opacity=".6"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            </div>
-          </div>
-          <div class="project-body">
-            <h3>Cabine Segura Híbrida — Perfuratrizes</h3>
-            <p>Desenvolvimento de cabine segura híbrida para perfuratrizes e geradores off-grid móveis para cancelas em áreas de mineração. Projeto premiado pela Vale no programa Kaizen pela inovação.</p>
-          </div>
+    <div class="project-card fade-up">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">Mineração · Vale</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.2" opacity=".6"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
-
-        <div class="project-card fade-up" style="transition-delay:.1s">
-          <div class="project-thumb">
-            <div class="project-thumb-pattern"></div>
-            <span class="project-tag">Telecom · LTE</span>
-            <div class="project-thumb-icon">
-              <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.2" opacity=".6"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            </div>
-          </div>
-          <div class="project-body">
-            <h3>COW (Cell on Wheels) para LTE</h3>
-            <p>Liderança no desenvolvimento de Cell on Wheels para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
-          </div>
-        </div>
-
-        <div class="project-card fade-up" style="transition-delay:.2s">
-          <div class="project-thumb">
-            <div class="project-thumb-pattern"></div>
-            <span class="project-tag">IoT · Medição</span>
-            <div class="project-thumb-icon">
-              <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#D4A5A5" stroke-width="1.2" opacity=".8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-          </div>
-          <div class="project-body">
-            <h3>SMARTEM — Medição Residencial</h3>
-            <p>Implementação do equipamento SMARTEM para medição residencial e avaliação de normas in loco, assegurando conformidade técnica e precisão na coleta de dados de consumo.</p>
-          </div>
-        </div>
-
+      </div>
+      <div class="project-body">
+        <h3>Cabine Segura Híbrida — Perfuratrizes</h3>
+        <p>Desenvolvimento de cabine segura híbrida para perfuratrizes e geradores off-grid móveis para cancelas em áreas de mineração. Projeto premiado pela Vale no programa Kaizen pela inovação.</p>
       </div>
     </div>
+
+    <div class="project-card fade-up" style="transition-delay:.1s">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">Telecom · LTE</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.2" opacity=".6"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>COW (Cell on Wheels) para LTE</h3>
+        <p>Liderança no desenvolvimento de Cell on Wheels para sistemas LTE, viabilizando triangulação de sinais em operações mineiras e aumentando a conectividade em campo.</p>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:.2s">
+      <div class="project-thumb">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-tag">IoT · Medição</span>
+        <div class="project-thumb-icon">
+          <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#D4A5A5" stroke-width="1.2" opacity=".8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>SMARTEM — Medição Residencial</h3>
+        <p>Implementação do equipamento SMARTEM para medição residencial e avaliação de normas in loco, assegurando conformidade técnica e precisão na coleta de dados de consumo.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── SKILLS ── -->
+
   <section id="skills">
     <div class="container">
       <p class="skills-section-label fade-up">Competências Técnicas</p>
       <h2 class="skills-title fade-up">Domínio <span class="metal-text">técnico</span> em cada detalhe</h2>
 
-      <div class="skills-grid">
-
-        <div class="skill-item fade-up">
-          <div class="skill-header">
-            <span class="skill-name">SolidWorks Electrical (Roteamento 3D)</span>
-            <span class="skill-pct">100%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-        </div>
-
-        <div class="skill-item fade-up" style="transition-delay:.1s">
-          <div class="skill-header">
-            <span class="skill-name">AutoCAD & Revit — Projetos Elétricos</span>
-            <span class="skill-pct">100%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-        </div>
-
-        <div class="skill-item fade-up" style="transition-delay:.2s">
-          <div class="skill-header">
-            <span class="skill-name">Sistemas Off-Grid & Híbridos</span>
-            <span class="skill-pct">100%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-        </div>
-
-        <div class="skill-item fade-up" style="transition-delay:.3s">
-          <div class="skill-header">
-            <span class="skill-name">NBR 5410, 14039 & 5419 (SPDA)</span>
-            <span class="skill-pct">100%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-        </div>
-
-        <div class="skill-item fade-up" style="transition-delay:.4s">
-          <div class="skill-header">
-            <span class="skill-name">Hardware Embarcado & Arduino</span>
-            <span class="skill-pct">100%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-        </div>
-
-        <div class="skill-item fade-up" style="transition-delay:.5s">
-          <div class="skill-header">
-            <span class="skill-name">Gestão de Projetos (PMBok)</span>
-            <span class="skill-pct">85%</span>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
-        </div>
-
+```
+  <div class="skills-grid">
+    <div class="skill-item fade-up">
+      <div class="skill-header">
+        <span class="skill-name">SolidWorks Electrical (Roteamento 3D)</span>
+        <span class="skill-pct">90%</span>
       </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
     </div>
+    <div class="skill-item fade-up" style="transition-delay:.1s">
+      <div class="skill-header">
+        <span class="skill-name">AutoCAD & Revit — Projetos Elétricos</span>
+        <span class="skill-pct">92%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.2s">
+      <div class="skill-header">
+        <span class="skill-name">Sistemas Off-Grid & Híbridos</span>
+        <span class="skill-pct">95%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.3s">
+      <div class="skill-header">
+        <span class="skill-name">NBR 5410, 14039 & 5419 (SPDA)</span>
+        <span class="skill-pct">93%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:93%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.4s">
+      <div class="skill-header">
+        <span class="skill-name">Hardware Embarcado & Arduino</span>
+        <span class="skill-pct">80%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-item fade-up" style="transition-delay:.5s">
+      <div class="skill-header">
+        <span class="skill-name">Gestão de Projetos (PMBok)</span>
+        <span class="skill-pct">82%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── CONTACT ── -->
+
   <section id="contact">
     <div class="container">
       <div class="contact-grid">
-
         <div class="fade-up">
           <p class="section-label">Vamos conversar</p>
           <h2 class="section-title">Entre em <span class="metal-text">contato</span></h2>
           <div class="divider"></div>
           <p style="margin-top:1.5rem;font-size:.9rem;line-height:1.8;color:#7a8d98">
-            Gostou do meu trabalho? Vamos conversar! Estou em Belo Horizonte – MG e atendo projetos em todo o Brasil.
+            Tem um projeto de engenharia elétrica, sistema off-grid ou SPDA? Vamos conversar — estou em Belo Horizonte – MG e atendo projetos em todo o Brasil.
           </p>
 
-          <div class="contact-item">
-            <div class="contact-icon-wrap">
-              <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.88 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.81 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <div>
-              <p class="contact-item-label">Telefone / WhatsApp</p>
-              <p class="contact-item-value">(31) 99430-9333</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon-wrap">
-              <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <p class="contact-item-label">E-mail</p>
-              <p class="contact-item-value">eng.saracarolina@gmail.com</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon-wrap">
-              <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </div>
-            <div>
-              <p class="contact-item-label">LinkedIn</p>
-              <p class="contact-item-value">linkedin.com/in/sara-carolina</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon-wrap">
-              <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <div>
-              <p class="contact-item-label">Localização</p>
-              <p class="contact-item-value">Belo Horizonte – MG</p>
-            </div>
-          </div>
+```
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.88 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.81 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-
-        <div class="contact-form-wrap fade-up" style="transition-delay:.15s">
-          <div class="form-group">
-            <label>Nome completo</label>
-            <input type="text" placeholder="Seu nome" />
-          </div>
-          <div class="form-group">
-            <label>E-mail</label>
-            <input type="email" placeholder="seu@email.com" />
-          </div>
-          <div class="form-group">
-            <label>Assunto</label>
-            <input type="text" placeholder="Ex: Projeto elétrico residencial" />
-          </div>
-          <div class="form-group">
-            <label>Mensagem</label>
-            <textarea placeholder="Descreva seu projeto ou necessidade..."></textarea>
-          </div>
-          <button class="btn-primary" style="width:100%;justify-content:center">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Enviar Mensagem
-          </button>
+        <div>
+          <p class="contact-item-label">Telefone / WhatsApp</p>
+          <p class="contact-item-value">(31) 99430-9333</p>
         </div>
+      </div>
 
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value">eng.saracarolina@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B76E79" stroke-width="1.7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">LinkedIn</p>
+          <p class="contact-item-value">linkedin.com/in/sara-carolina</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#B87333" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">Localização</p>
+          <p class="contact-item-value">Belo Horizonte – MG</p>
+        </div>
       </div>
     </div>
+
+    <div class="contact-form-wrap fade-up" style="transition-delay:.15s">
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome" />
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" placeholder="seu@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Assunto</label>
+        <input type="text" placeholder="Ex: Projeto elétrico residencial" />
+      </div>
+      <div class="form-group">
+        <label>Mensagem</label>
+        <textarea placeholder="Descreva seu projeto ou necessidade..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Enviar Mensagem
+      </button>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- ── FOOTER ── -->
+
   <footer>
     <div class="container">
       <p class="footer-brand">Sara Carolina Alves de Paula</p>
@@ -1072,22 +1088,23 @@
   </footer>
 
   <!-- ── SCRIPTS ── -->
+
   <script>
-    // Nav scroll shadow
+    // Nav scroll effect
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Fade-up on scroll
+    // Fade-up on scroll (IntersectionObserver)
+    const fadeEls = document.querySelectorAll('.fade-up');
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      });
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    fadeEls.forEach(el => observer.observe(el));
 
-    // Skill bars — animate when visible
+    // Skill bars: trigger fill on view
+    const skillFills = document.querySelectorAll('.skill-fill');
     const skillObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -1096,10 +1113,7 @@
         }
       });
     }, { threshold: 0.3 });
-    document.querySelectorAll('.skill-fill').forEach(el => {
-      el.style.transform = 'scaleX(0)';
-      skillObs.observe(el);
-    });
+    skillFills.forEach(el => { el.style.transform = 'scaleX(0)'; skillObs.observe(el); });
   </script>
 
 </body>
